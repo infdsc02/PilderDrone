@@ -1,0 +1,70 @@
+<launch>
+
+    <!-- Launches the AR.Drone driver -->
+    <node name="ardrone_driver" pkg="ardrone_autonomy" type="ardrone_driver" output="screen" clear_params="true">
+        <param name="outdoor" value="0" /> <!-- If we are flying outdoors, will select more aggressive default settings -->
+        <param name="flight_without_shell" value="0" /> <!-- Changes internal controller gains if we are flying without the propeller guard -->
+
+        <param name="altitude_max" value="1800" /> <!-- in millimeters = 3 meters = 9' -->
+        <param name="altitude_min" value="1500" /> <!-- in millimeters = 5cm = 2" -->
+        <param name="euler_angle_max" value="0.1" /> <!-- maximum allowable body angle in radians = 5 degrees -->
+        <param name="control_vz_max" value="500" /> <!-- maximum z velocity in mm/sec = 0.2m/sec -->
+		<param name="realtime_navdata" value="True" />
+		<param name="navdata_demo" value="0" />
+        <param name="control_yaw" value="2.1" /> <!-- maximum rotation rate in radians/sec = 40 degrees per second (1/9 rev/sec) -->
+        
+        <param name="detect_type" value="10" />
+	    <param name="detections_select_h" value="32" />  <!-- In the horizontal camera, look for the orange-blue-orange markers -->
+	    <param name="detections_select_v_hsync" value="128" />  <!-- In the vertical camera, detect the A4 marker -->
+	    <param name="enemy_colors" value="3" />  <!-- Orange-Blue-Orange = 3 -->
+	    <param name="enemy_without_shell" value="0" />  <!-- Detect the indoor stickers, rather than the outdoor hull -->
+
+    </node>
+    
+    <arg name="markerId"        default="1"/>
+    <arg name="markerSize"      default="0.285"/>  <!-- En el A4 mide 0.198 en el A3 mide 0.285-->
+    <arg name="marker_frame"    default="aruco_marker_frame"/>
+    <arg name="ref_frame"       default=""/>
+
+
+    <node pkg="aruco_ros" type="single" name="aruco_single">
+        <remap from="/camera_info" to="/ardrone/camera_info" />
+        <remap from="/image" to="/ardrone/image_raw" />
+        <param name="image_is_rectified" value="False"/>
+        <param name="marker_size"        value="$(arg markerSize)"/>
+        <param name="marker_id"          value="$(arg markerId)"/>
+        <param name="reference_frame"    value="$(arg ref_frame)"/>
+        <param name="camera_frame"       value="${tf_prefix}/ardrone_base_link"/>
+        <param name="marker_frame"       value="$(arg marker_frame)" />
+    </node>
+    
+    <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
+		<param name="joy_node/dev" type="str" value="/dev/input/js0"/>
+	</node>
+	
+
+	<node name="joystick_controller" pkg="prueba" type="joystick_controller_2.py" output="screen" required="true">
+
+		<param name="ButtonEmergency"	value="13" />
+		<param name="ButtonLand"		value="15" />
+		<param name="ButtonTakeoff"		value="14" />
+
+	</node>
+	
+    <!--
+    <node name="distanciaTag" pkg="prueba" type="distanciaTag.py" required="true"/>
+	<node name="centrarTag" pkg="prueba" type="centrarTag.py" required="true"/>
+	<node name="piloto" pkg="prueba" type="piloto.py" required="true"/>
+    
+    
+    <node name="track_tag" pkg="prueba" type="track_tag.py" required="true"/>
+    <node name="pruebaSorda" pkg="prueba" type="prueba_sorda.py" required="true"/>
+    <node name="keyboard_controller" pkg="prueba" type="keyboard_controller.py" required="true"/>
+    <node name="nodoLector" pkg="prueba" type="nodoLector.py" required="true"/>
+	<node name="nodoParser" pkg="prueba" type="nodoParser.py" required="true"/>
+	<node name="nodoDespega" pkg="prueba" type="nodoDespega.py" required="true"/>
+	<node name="nodoAterriza" pkg="prueba" type="nodoAterriza.py" required="true"/>
+    <node name="nodoGiraIzq" pkg="prueba" type="nodoGiraIzq.py" required="true"/>
+    <node name="nodoGiraDer" pkg="prueba" type="nodoGiraDer.py" required="true"/>
+	-->
+</launch>

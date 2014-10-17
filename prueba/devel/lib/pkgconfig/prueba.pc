@@ -1,0 +1,8 @@
+prefix=/home/david/proyecto/src/prueba/devel
+
+Name: prueba
+Description: Description of prueba
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/david/proyecto/src/prueba/devel/lib 
+Requires: 

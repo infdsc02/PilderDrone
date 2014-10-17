@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "prueba")
+set(prueba_MAINTAINER "david <david@todo.todo>")
+set(prueba_DEPRECATED "")
+set(prueba_VERSION "0.0.0")
+set(prueba_BUILD_DEPENDS "ardrone_autonomy" "camera_info_manager" "cv_bridge" "image_transport" "opencv2" "rospy" "sensor_msgs" "std_msgs")
+set(prueba_RUN_DEPENDS "ardrone_autonomy" "camera_info_manager" "cv_bridge" "image_transport" "opencv2" "rospy" "sensor_msgs" "std_msgs")
+set(prueba_BUILDTOOL_DEPENDS "catkin")

@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: prueba
+Description: Description of prueba
+Version: 0.0.0
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: 

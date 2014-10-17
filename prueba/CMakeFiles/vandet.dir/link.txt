@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/vandet.dir/src/vandet.cpp.o  -o devel/lib/prueba/vandet -rdynamic 
